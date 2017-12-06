@@ -23,13 +23,13 @@ public class MainController {
 
 	@PostMapping("/user")
 	public String catalogo(Model model, @RequestParam("name") String name, @RequestParam("email") String email) {
-		User user = new User(name, email);
 
-		repository.save(user);
-
-		model.addAttribute("name", name);
-
-		return "catalogo";
+		User user = repository.getLogin(email);
+		if (user != null) {
+			model.addAttribute("name", name);
+			return "catalogo";
+		} else
+			return index();
 
 	}
 
